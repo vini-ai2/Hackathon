@@ -4,7 +4,8 @@ import os
 import pandas as pd
 
 # Replace with your actual API key
-client = anthropic.Client("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")
+api_key = "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"
+client = anthropic.Client(api_key=api_key)
 
 # Function to generate the prompt based on user input
 def generate_prompt(diagnosis, patient_history=None):
