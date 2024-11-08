@@ -1,10 +1,10 @@
 import streamlit as st
-import anthropic
 import os
 import pandas as pd
 from dotenv import load_dotenv
+from groq import Groq
 load_dotenv()
-client = anthropic.Anthropic(
+client = Groq(
     api_key=os.getenv("API_KEY"),
 )
 
@@ -21,13 +21,22 @@ def generate_prompt(diagnosis, patient_history=None):
 
 def get_drug_recommendation(diagnosis, patient_history=None):
     prompt = generate_prompt(diagnosis, patient_history)
-    response = client.completions.create(
-        model="claude-v1",
-        prompt=prompt,
-        max_tokens_to_sample=300,
-        temperature=0.7
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {
+                "role": "system",
+                "content": "Be extremely brief and to-the-point. Only state the drugs that would be useful in curing the diagnosis"
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        # max_tokens=300,
+        temperature=0.5
     )
-    return response["completion"]
+    return response.choices[0].message.content
 
 st.title("Medical Drug Recommendation Chatbot")
 st.write("This chatbot provides drug recommendations based on a given diagnosis and patient history.")
