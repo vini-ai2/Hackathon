@@ -26,7 +26,7 @@ def get_drug_recommendation(diagnosis, patient_history=None):
         messages=[
             {
                 "role": "system",
-                "content": "Be extremely brief and to-the-point. Only state the drugs that would be useful in curing the diagnosis"
+                "content": "Be extremely brief and to-the-point. Only state the best drug that would be useful in curing the diagnosis"
             },
             {
                 "role": "user",
