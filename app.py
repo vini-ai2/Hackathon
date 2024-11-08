@@ -3,7 +3,10 @@ import anthropic
 import os
 import pandas as pd
 
-client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+#client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+client = anthropic.Anthropic(
+  api_key="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",
+)
 
 def generate_prompt(diagnosis, patient_history=None):
     prompt = f"""
