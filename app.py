@@ -5,19 +5,14 @@ import pandas as pd
 
 client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-# Function to generate the prompt based on user input
 def generate_prompt(diagnosis, patient_history=None):
-     matching_drugs = df[df['Diagnosis'].str.contains(diagnosis, case=False, na=False)]
-     drug_summary = ""
-     for index, row in matching_drugs.iterrows():
-         drug_summary += f" - {row['Drug Name']}: Dosage: {row['Dosage']}, Side Effects: {row['Side Effects']}, Contraindications: {row['Contraindications']}\n"
-     prompt = f"""
-     Based on the diagnosis of {diagnosis}, recommend the optimal drug treatment options.
-     Consider any known guidelines and common drugs for treating this condition.
-     """
-     if patient_history:
-         prompt += f"\nPatient history includes: {patient_history}."
-     prompt += "\nPlease provide a recommended drug and any important information on potential side effects or contraindications."
+    prompt = f"""
+    Based on the diagnosis of {diagnosis}, recommend the optimal drug treatment options.
+    Consider any known guidelines and common drugs for treating this condition.
+    """
+    if patient_history:
+        prompt += f"\nPatient history includes: {patient_history}."
+    prompt += "\nPlease provide a recommended drug and any important information on potential side effects or contraindications."
 
     return prompt
 
