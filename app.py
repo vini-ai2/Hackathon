@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 # Replace with your actual API key
-api_key = "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"
+api_key = "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"
 client = anthropic.Client(api_key=api_key)
 
 # Function to generate the prompt based on user input
