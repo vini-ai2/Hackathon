@@ -2,10 +2,10 @@ import streamlit as st
 import anthropic
 import os
 import pandas as pd
-
-#client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+from dotenv import load_dotenv
+load_dotenv()
 client = anthropic.Anthropic(
-  api_key="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",
+    api_key=os.getenv("API_KEY"),
 )
 
 def generate_prompt(diagnosis, patient_history=None):
@@ -19,7 +19,6 @@ def generate_prompt(diagnosis, patient_history=None):
 
     return prompt
 
-# Function to get a drug recommendation from the Anthropic API
 def get_drug_recommendation(diagnosis, patient_history=None):
     prompt = generate_prompt(diagnosis, patient_history)
     response = client.completions.create(
@@ -30,15 +29,12 @@ def get_drug_recommendation(diagnosis, patient_history=None):
     )
     return response["completion"]
 
-# Streamlit app setup
 st.title("Medical Drug Recommendation Chatbot")
 st.write("This chatbot provides drug recommendations based on a given diagnosis and patient history.")
 
-# Text inputs for diagnosis and patient history
 diagnosis = st.text_input("Enter diagnosis:")
 patient_history = st.text_area("Enter patient history (optional):")
 
-# Chatbot logic
 if st.button("Get Drug Recommendation"):
     if diagnosis:
         with st.spinner("Fetching recommendation..."):
