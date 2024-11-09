@@ -43,7 +43,6 @@ def get_drug_recommendation(diagnosis, patient_info=None, follow_up=None):
 st.title("Medical Drug Recommendation Chatbot")
 st.write("This chatbot provides drug recommendations based on a given diagnosis and patient history.")
 
-# Initialize session state variables
 if 'diagnosis' not in st.session_state:
     st.session_state.diagnosis = ""
 if 'patient_info' not in st.session_state:
@@ -53,11 +52,9 @@ if 'conversation' not in st.session_state:
 if 'first_recommendation_given' not in st.session_state:
     st.session_state.first_recommendation_given = False
 
-# Input fields for diagnosis and patient info
 st.session_state.diagnosis = st.text_input("Enter diagnosis:", st.session_state.diagnosis)
 st.session_state.patient_info = st.text_area("Enter additional patient information (optional):", st.session_state.patient_info)
 
-# Button to get initial drug recommendation
 if st.button("Get Drug Recommendation", key="get_recommendation"):
     if st.session_state.diagnosis:
         with st.spinner("Fetching recommendation..."):
@@ -69,13 +66,11 @@ if st.button("Get Drug Recommendation", key="get_recommendation"):
     else:
         st.warning("Please enter a diagnosis to get a recommendation.")
 
-# Display conversation history
 st.write("### Conversation History")
 for message in st.session_state.conversation:
     role = "User" if message["role"] == "user" else "Chatbot"
     st.write(f"**{role}:** {message['message']}")
 
-# Show follow-up question input and buttons only after the first recommendation
 if st.session_state.first_recommendation_given:
     follow_up = st.text_input("Ask a follow-up question or request more details:", key="follow_up")
 
